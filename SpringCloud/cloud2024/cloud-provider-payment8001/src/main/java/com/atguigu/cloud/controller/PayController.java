@@ -51,6 +51,7 @@ public class PayController {
     @Operation(summary = "按照ID查流水", description = "查询支付流水方法")
     public ResultData<Pay> getById(@PathVariable("id") Integer id) {
 //        return payService.getById(id);
+        if(id==-4) throw new RuntimeException("id不能为负数");
         Pay pay = payService.getById(id);
         return ResultData.success(pay);
     }
