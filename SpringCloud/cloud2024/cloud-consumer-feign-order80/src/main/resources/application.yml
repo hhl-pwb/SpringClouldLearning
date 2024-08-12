@@ -12,3 +12,37 @@ spring:
       discovery:
         prefer-ip-address: true #优先使用服务ip进行注册
         service-name: ${spring.application.name}
+    openfeign:
+      client:
+        config:
+         # default设置全局超时时间，指定服务名称可以设置单个服务的超时时间
+          default:
+            #链接超时时间 3秒
+            connect-timeout: 3000
+            #读取超时时间 3秒
+            read-timeout: 3000
+          # serviceC服务名称，例如cloud-payment-service
+          # 二者可以共存，但是此时就是 配置单个微服务的生效
+          cloud-payment-service:
+            #链接超时时间 4秒
+            connect-timeout: 4000
+            #读取超时时间 4秒
+            read-timeout: 4000
+      httpclient:
+        hc5:
+          enabled: true
+      compression:
+        request:
+          enabled: true
+          min-request-size: 2048 #最小触发压缩的大小
+          mime-types: text/xml,application/xml,application/json #触发压缩数据类型
+        response:
+          enabled: true
+# feign日志以什么级别监控哪个接口
+logging:
+  level:
+    com:
+      atguigu:
+        cloud:
+          apis:
+            PayFeignApi: debug
